@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		4F393A291C3C8BCD00B3EA13 /* main.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F393A281C3C8BCD00B3EA13 /* main.swift */; };
+		4F501EB22334385C008C8888 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F501EB12334385C008C8888 /* SceneDelegate.swift */; };
 		4FA795692315F215007C88D6 /* ContactListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA795682315F215007C88D6 /* ContactListView.swift */; };
 		4FA7956B2315F2B1007C88D6 /* ContactListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA7956A2315F2B1007C88D6 /* ContactListModel.swift */; };
 		4FA7956D2315F350007C88D6 /* RestClientExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4FA7956C2315F350007C88D6 /* RestClientExtension.swift */; };
@@ -22,6 +23,7 @@
 /* Begin PBXFileReference section */
 		045D1C5BC2F1EADFDFB3671E /* Pods-iOS13NativeSwiftTemplate.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iOS13NativeSwiftTemplate.release.xcconfig"; path = "Pods/Target Support Files/Pods-iOS13NativeSwiftTemplate/Pods-iOS13NativeSwiftTemplate.release.xcconfig"; sourceTree = "<group>"; };
 		4F393A281C3C8BCD00B3EA13 /* main.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = main.swift; sourceTree = "<group>"; };
+		4F501EB12334385C008C8888 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		4FA795682315F215007C88D6 /* ContactListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListView.swift; sourceTree = "<group>"; };
 		4FA7956A2315F2B1007C88D6 /* ContactListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactListModel.swift; sourceTree = "<group>"; };
 		4FA7956C2315F350007C88D6 /* RestClientExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestClientExtension.swift; sourceTree = "<group>"; };
@@ -99,6 +101,7 @@
 				4FA795682315F215007C88D6 /* ContactListView.swift */,
 				4FA7956A2315F2B1007C88D6 /* ContactListModel.swift */,
 				4FA7956C2315F350007C88D6 /* RestClientExtension.swift */,
+				4F501EB12334385C008C8888 /* SceneDelegate.swift */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -238,6 +241,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4FA795692315F215007C88D6 /* ContactListView.swift in Sources */,
+				4F501EB22334385C008C8888 /* SceneDelegate.swift in Sources */,
 				4FA7956D2315F350007C88D6 /* RestClientExtension.swift in Sources */,
 				4FD6C47A1B754AF1002F9F90 /* AppDelegate.swift in Sources */,
 				4FA7956B2315F2B1007C88D6 /* ContactListModel.swift in Sources */,
