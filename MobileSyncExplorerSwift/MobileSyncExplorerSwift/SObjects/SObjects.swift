@@ -30,6 +30,7 @@ import Foundation
 import SmartStore
 import MobileSync
 import Combine
+import GRDB
 
 enum SObjectConstants {
     static let kSObjectIdField    = "Id"
@@ -229,6 +230,7 @@ class SObjectDataManager: ObservableObject {
     var store: SmartStore
     var syncMgr: SyncManager
     var dataSpec: SObjectDataSpec
+    var dbPool: DatabasePool?
 
     init(dataSpec: SObjectDataSpec, userAccount: UserAccount) {
         syncMgr = SyncManager.sharedInstance(forUserAccount: userAccount)
@@ -242,6 +244,10 @@ class SObjectDataManager: ObservableObject {
             let key = NSString(string: SFKeyForUserAndScope(userAccount, UserAccount.AccountScope.community)!)
             SObjectDataManager.managers[key] = nil
         }
+        
+        // Opening database with GRDB also
+        dbPool = openWithGRDB()
+
     }
     
     static func sharedInstance(for userAccount: UserAccount) -> SObjectDataManager {
@@ -300,8 +306,11 @@ class SObjectDataManager: ObservableObject {
             })
              .store(in: &cancellableSet)
     }
-
+    
     func loadLocalData() {
+        loadLocalDataWithGRDB()
+        
+        /*
         let sobjectsQuerySpec = QuerySpec.buildAllQuerySpec(soupName: dataSpec.soupName, orderPath: dataSpec.orderByFieldName, order: .ascending, pageSize: kMaxQueryPageSize)
         store.publisher(for: sobjectsQuerySpec.smartSql)
             .receive(on: RunLoop.main)
@@ -317,6 +326,7 @@ class SObjectDataManager: ObservableObject {
             }
             .assign(to: \.contacts, on: self)
             .store(in: &cancellableSet)
+         */
     }
 
     func createLocalData(_ newData: SObjectData?) {
@@ -494,5 +504,65 @@ class SObjectDataManager: ObservableObject {
     
     deinit {
         cancellableSet.forEach { $0.cancel() }
+    }
+    
+    //
+    // For GRDB
+    //
+    
+    func openWithGRDB() -> DatabasePool? {
+        var pool:DatabasePool?
+        
+        do {
+            let keyData = try KeyGenerator.encryptionKey(for: SmartStore.encryptionKeyLabel).dataRepresentation
+            let key = keyData.base64EncodedString()
+            
+            var config = Configuration()
+               config.prepareDatabase { db in
+                   try db.execute(sql: "PRAGMA cipher_default_kdf_iter = 4000")
+                   try db.usePassphrase(key)
+               }
+
+            pool = try DatabasePool(path: store.path!, configuration: config)
+        } catch let error as NSError {
+            MobileSyncLogger.e(SObjectDataManager.self, message: "Failed to open database with GRDB: \(error)")
+        }
+        
+        return pool
+    }
+    
+    struct ContactSoupElement: Codable, FetchableRecord, PersistableRecord {
+        static var databaseTableName = "TABLE_2"
+        static var databaseSelection = [ Column("soup") ]
+        
+        var soup: String
+        
+        func asObject() -> ContactSObjectData {
+            return ContactSObjectData(soupDict: SFJsonUtils.object(fromJSONString: soup) as? [String : Any])
+        }
+    }
+    
+    func loadLocalDataWithGRDB() {
+        guard let dbPool = dbPool else {
+            return
+        }
+
+        do {
+            try dbPool.read { db in
+                contacts = try ContactSoupElement.fetchAll(db).map { $0.asObject() }
+            }
+        } catch let error as NSError {
+            MobileSyncLogger.e(SObjectDataManager.self, message: "Failed to get local data with GRDB: \(error)")
+        }
+    }
+}
+
+// From Apple sample code (https://developer.apple.com/documentation/cryptokit/storing_cryptokit_keys_in_the_keychain)
+extension ContiguousBytes {
+    var dataRepresentation: Data {
+        return self.withUnsafeBytes { bytes in
+            let cfdata = CFDataCreateWithBytesNoCopy(nil, bytes.baseAddress?.assumingMemoryBound(to: UInt8.self), bytes.count, kCFAllocatorNull)
+            return ((cfdata as NSData?) as Data?) ?? Data()
+        }
     }
 }
