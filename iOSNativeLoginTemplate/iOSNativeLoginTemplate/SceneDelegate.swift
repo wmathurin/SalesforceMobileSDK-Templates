@@ -45,9 +45,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         // Fill in the values below from the connected app that was created for Native Login and
         // the url of your Experience Cloud community.
         //
-        let clientId = "your-client-id"
-        let redirectUri = "your-redirect-uri"
-        let loginUrl = "your-community-url"
+        let clientId = "3MVG9uq9ANVdsbAWbYS9KFSt3AIA7Z6O4F3CIyZM3E6sE60tY860_JDEVkw4ZFUhgrGSCqKUDwiOKCGpEbJ_7"
+        let redirectUri = "https://orgfarm-6e6a94ed0c-dev-ed.develop.my.site.com/services/oauth2/echo"
+        let loginUrl = "https://orgfarm-6e6a94ed0c-dev-ed.develop.my.site.com/coralcloud"
         
         assert(clientId != "your-client-id", "Please add your Native Login client id.")
         assert(redirectUri != "your-redirect-uri", "Please add your Native Login redirect uri.")
