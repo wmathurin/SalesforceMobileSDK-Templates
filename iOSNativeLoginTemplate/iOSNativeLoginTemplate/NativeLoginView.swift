@@ -188,6 +188,15 @@ struct NativeLoginView: View {
                         .buttonStyle(.bordered)
                         .tint(colorScheme == .dark ? .white : .blue)
                         .zIndex(2.0)
+
+                        Button {
+                            navigate(.GuestLogin)
+                        } label: {
+                            Text("Login as Guest Instead").frame(minWidth: 150)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(colorScheme == .dark ? .white : .blue)
+                        .zIndex(2.0)
                         
                         Button {
                             navigate(.StartPasswordReset)
@@ -205,6 +214,41 @@ struct NativeLoginView: View {
                         }
                         .buttonStyle(.bordered)
                         .tint(colorScheme == .dark ? .white : .blue)
+                        .zIndex(2.0)
+                        
+                    case .GuestLogin:
+                        Button {
+                            Task {
+                                messageReset()
+                                isAuthenticating = true
+                                
+                                // Login.
+                                let uvid = UUID().uuidString
+                                let result = await SalesforceManager.shared.nativeLoginManager()
+                                    .guestLogin(uvid: uvid)
+                                isAuthenticating = false
+                                
+                                // Act on the response.
+                                unwrapResult(result) {
+                                    layoutReset()
+                                }
+                            }
+                        } label: {
+                            HStack {
+                                Text("Login as Guest")
+                            }.frame(minWidth: 150)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(colorScheme == .dark ? .white : .blue)
+                        .zIndex(2.0)
+                        
+                        Button {
+                            layoutReset()
+                        } label: {
+                            Text("Cancel").frame(minWidth: 150)
+                        }
+                        .buttonStyle(.bordered)
+                        .tint(.red)
                         .zIndex(2.0)
                         
                     case .StartRegistration:
@@ -696,6 +740,9 @@ struct NativeLoginView: View {
         case .invalidPassword:
             errorMessage("Invalid password.")
             break
+        case .invalidUvid:
+            errorMessage("Invalid UVID.")
+            break
         case .unknownError:
             errorMessage("An unknown error has occurred.")
             break
@@ -749,6 +796,10 @@ enum IdentityFlowLayoutType {
     
     /// A layout for authorization code and credentials flow via username and password
     case Login
+    
+    /// A layout for authorization code and credentials flow via guest user flow
+    case GuestLogin
+
 }
 
 // MARK: Private SwiftUI Utilities
