@@ -225,7 +225,7 @@ struct NativeLoginView: View {
                                 // Login.
                                 let uvid = UUID().uuidString
                                 let result = await SalesforceManager.shared.nativeLoginManager()
-                                    .guestLogin(uvid: uvid)
+                                    .guestLogin(uvid: uvid, scopes: ["openid"])
                                 isAuthenticating = false
                                 
                                 // Act on the response.
