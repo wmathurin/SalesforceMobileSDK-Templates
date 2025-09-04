@@ -42,23 +42,30 @@ class ContactListScreen extends React.Component {
         this.state = {data: []};
     }
 
-    componentDidMount() {
-        var that = this;
-        oauth.getAuthCredentials(
-            () => that.fetchData(), // already logged in
-            () => {
-                oauth.authenticate(
-                    () => that.fetchData(),
-                    (error) => console.log('Failed to authenticate:' + error)
-                );
-            });
+    async componentDidMount() {
+        try {
+            // Try to get existing auth credentials
+            await oauth.getAuthCredentials();
+            // Already logged in, fetch data
+            this.fetchData();
+        } catch (error) {
+            // Not logged in, need to authenticate
+            try {
+                await oauth.authenticate();
+                this.fetchData();
+            } catch (authError) {
+                console.log('Failed to authenticate:', authError);
+            }
+        }
     }
 
-    fetchData() {
-        var that = this;
-        net.query('SELECT Id, Name FROM Contact LIMIT 100',
-                  (response) => that.setState({data: response.records})
-                 );
+    async fetchData() {
+        try {
+            const response = await net.query('SELECT Id, Name FROM Contact LIMIT 100');
+            this.setState({data: response.records});
+        } catch (error) {
+            console.log('Failed to fetch data:', error);
+        }
     }
 
     render() {
