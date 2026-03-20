@@ -111,8 +111,8 @@ jobs:
           if [ "$TEST_ALL" = true ]; then
             echo "test-all=true" >> $GITHUB_OUTPUT
             echo "has-changes=true" >> $GITHUB_OUTPUT
-            # Convert all templates to JSON array
-            TEMPLATES_JSON=$(echo "$TEMPLATES" | jq -R . | jq -s .)
+            # Convert all templates to JSON array (compact format for GitHub Actions)
+            TEMPLATES_JSON=$(echo "$TEMPLATES" | jq -R . | jq -sc .)
             echo "templates=$TEMPLATES_JSON" >> $GITHUB_OUTPUT
             echo "Testing all templates due to core file changes"
           else
@@ -133,9 +133,9 @@ jobs:
 
             echo "test-all=false" >> $GITHUB_OUTPUT
 
-            # Convert to JSON array
+            # Convert to JSON array (compact format for GitHub Actions)
             if [ ${#CHANGED_TEMPLATES[@]} -gt 0 ]; then
-              TEMPLATES_JSON=$(printf '%s\n' "${CHANGED_TEMPLATES[@]}" | jq -R . | jq -s .)
+              TEMPLATES_JSON=$(printf '%s\n' "${CHANGED_TEMPLATES[@]}" | jq -R . | jq -sc .)
               echo "templates=$TEMPLATES_JSON" >> $GITHUB_OUTPUT
               echo "has-changes=true" >> $GITHUB_OUTPUT
               echo "Templates to test: ${CHANGED_TEMPLATES[@]}"
