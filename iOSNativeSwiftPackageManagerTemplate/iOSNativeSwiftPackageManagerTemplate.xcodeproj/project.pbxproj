@@ -209,7 +209,7 @@
 			);
 			mainGroup = 4FD6C46B1B754AF1002F9F90;
 			packageReferences = (
-				4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */,
+				4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */,
 			);
 			productRefGroup = 4FD6C4751B754AF1002F9F90 /* Products */;
 			projectDirPath = "";
@@ -421,41 +421,37 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCRemoteSwiftPackageReference section */
-		4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/forcedotcom/SalesforceMobileSDK-iOS-SPM";
-			requirement = {
-				branch = master;
-				kind = branch;
-			};
+/* Begin XCLocalSwiftPackageReference section */
+		4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */ = {
+			isa = XCLocalSwiftPackageReference;
+			relativePath = ../../SalesforceMobileSDK-iOS;
 		};
-/* End XCRemoteSwiftPackageReference section */
+/* End XCLocalSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
 		4FFBC6592A5DC21B004CF964 /* MobileSync */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */;
+			package = 4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */;
 			productName = MobileSync;
 		};
 		4FFBC65B2A5DC21B004CF964 /* SalesforceAnalytics */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */;
+			package = 4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */;
 			productName = SalesforceAnalytics;
 		};
 		4FFBC65D2A5DC21B004CF964 /* SalesforceSDKCommon */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */;
+			package = 4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */;
 			productName = SalesforceSDKCommon;
 		};
 		4FFBC65F2A5DC21B004CF964 /* SalesforceSDKCore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */;
+			package = 4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */;
 			productName = SalesforceSDKCore;
 		};
 		4FFBC6612A5DC21B004CF964 /* SmartStore */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 4FFBC6582A5DC21B004CF964 /* XCRemoteSwiftPackageReference "SalesforceMobileSDK-iOS-SPM" */;
+			package = 4FFBC6582A5DC21B004CF964 /* XCLocalSwiftPackageReference "SalesforceMobileSDK-iOS" */;
 			productName = SmartStore;
 		};
 /* End XCSwiftPackageProductDependency section */

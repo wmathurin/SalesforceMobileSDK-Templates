@@ -25,6 +25,7 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 
 import Foundation
 import SalesforceSDKCore
+import SalesforceSDKCoreSwift
 import Combine
 
 struct Contact :  Identifiable, Decodable  {
