@@ -24,6 +24,7 @@
 
 import Foundation
 import UIKit
+import SalesforceSDKCore
 import MobileSync
 import SwiftUI
 
