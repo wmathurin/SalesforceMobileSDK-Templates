@@ -25,8 +25,6 @@
 import Foundation
 import UIKit
 import MobileSync
-import MobileSyncSwift
-import SalesforceSDKCoreSwift
 import SwiftUI
 
 @UIApplicationMain

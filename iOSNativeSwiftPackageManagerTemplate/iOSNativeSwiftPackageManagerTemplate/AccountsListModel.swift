@@ -24,9 +24,7 @@ WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH 
 
 import Combine
 import SmartStore
-import SmartStoreSwift
 import MobileSync
-import MobileSyncSwift
 
 /**
  Model object for a single Account
