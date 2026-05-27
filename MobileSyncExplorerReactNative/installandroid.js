@@ -22,5 +22,35 @@ if (fs.existsSync(targetDir)) {
     rimraf.sync(path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'hybrid'));
     rimraf.sync(path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'libs', 'test'));
     rimraf.sync(path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'libs', 'SalesforceReact', 'package.json')); // confuses metro bundler
+
+    // Patch settings.gradle.kts to exclude sample apps
+    var settingsFile = path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'settings.gradle.kts');
+    if (fs.existsSync(settingsFile)) {
+        var settings = fs.readFileSync(settingsFile, 'utf8');
+        // Comment out sample app includes
+        settings = settings.replace(/^include\("(hybrid|native):/gm, '// include("$1:');
+        fs.writeFileSync(settingsFile, settings, 'utf8');
+        console.log('Patched settings.gradle.kts to exclude sample apps');
+    }
+
+    // Patch buildSrc build.gradle.kts to use AGP 8.12.0 for React Native compatibility
+    var buildSrcGradle = path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'buildSrc', 'build.gradle.kts');
+    if (fs.existsSync(buildSrcGradle)) {
+        var buildSrcContent = fs.readFileSync(buildSrcGradle, 'utf8');
+        // Replace AGP version with 8.12.0
+        buildSrcContent = buildSrcContent.replace(/"com\.android\.tools\.build:gradle:[^"]+"/g, '"com.android.tools.build:gradle:8.12.0"');
+        fs.writeFileSync(buildSrcGradle, buildSrcContent, 'utf8');
+        console.log('Patched buildSrc/build.gradle.kts to use AGP 8.12.0');
+    }
+
+    // Patch build.gradle.kts to use AGP 8.12.0
+    var buildGradle = path.join('mobile_sdk', 'SalesforceMobileSDK-Android', 'build.gradle.kts');
+    if (fs.existsSync(buildGradle)) {
+        var buildContent = fs.readFileSync(buildGradle, 'utf8');
+        // Replace AGP version with 8.12.0
+        buildContent = buildContent.replace(/"com\.android\.tools\.build:gradle:[^"]+"/g, '"com.android.tools.build:gradle:8.12.0"');
+        fs.writeFileSync(buildGradle, buildContent, 'utf8');
+        console.log('Patched build.gradle.kts to use AGP 8.12.0');
+    }
 }
 

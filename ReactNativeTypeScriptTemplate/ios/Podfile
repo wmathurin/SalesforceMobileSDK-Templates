@@ -16,6 +16,7 @@ if linkage != nil
 end
 
 target 'ReactNativeTypeScriptTemplate' do
+  source 'https://cdn.cocoapods.org/'
   config = use_native_modules!
 
   use_frameworks! :linkage => :static
